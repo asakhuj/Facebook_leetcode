@@ -1,0 +1,35 @@
+/**
+ * Definition for an interval.
+ * public class Interval {
+ *     int start;
+ *     int end;
+ *     Interval() { start = 0; end = 0; }
+ *     Interval(int s, int e) { start = s; end = e; }
+ * }
+ */
+class Solution {
+    public boolean canAttendMeetings(Interval[] intervals) {
+        if(intervals.length ==1 ) {
+		return true;
+	}
+	HashMap<Integer,Integer> map = new HashMap<Integer,Integer>();
+        int arr[] = new int[intervals.length];
+        for(int i=0 ; i<intervals.length; i++) {
+        	Interval current = intervals[i];
+        	map.put(current.start, current.end - current.start);
+        	arr[i] = current.start;
+        }
+        Arrays.sort(arr);
+        
+        
+        for(int j=1; j< arr.length ; j++) {
+        	int current = arr[j];
+        	int limit = map.get(arr[j-1]);
+        	if(arr[j-1]+ limit >current) {
+        		return false;
+        	}
+        }
+        
+        return true;
+    }
+}
